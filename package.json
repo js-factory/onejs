@@ -1,6 +1,6 @@
 {
   "name": "@js-factory/onejs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JavaScript framework for simple web application",
   "main": "index.js",
   "keywords": [
