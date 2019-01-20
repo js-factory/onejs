@@ -2,7 +2,7 @@
 An unified Javascript framework for building high performance web application.
 
 ## Motivation
-Onejs provide an abstract layer over a javascript library. It enables developer/organization to write a vanilla javascript code and bind it with framework you choose to build your application with. In the process with have `react & preact` integration available.
+Onejs provides an abstract layer over a javascript library. It enables developer/organization to write a vanilla javascript code and bind it with framework you choose to build your application with.
 
 ##### It's hard to switch between frameworks if your performance budget does not meet with one
 Considering all top javascript library adds considerable amount of initial javascript chunk into your application bundle i.e. react size is ~30kb. For any larger application, switch from one framework to another is relatively complex task and requires a lot of effort and time. onejs try to solve this problem and reduce the time and effort require in switching frameworks.
@@ -10,7 +10,7 @@ Considering all top javascript library adds considerable amount of initial javas
 ##### Classical component go polluted over the time and becomes hard to maintain
 This has been a common problem that after certain time your class component gets complex and a lot of business login being written into a single javascript file. With function programming approach we are trying to solve some of these problems. Developer needs to create small functions and attach those to your component. This allows you to maximize the usage of vanilla javascript.
 
-### Install
+### Installation
 ```
 npm i -S @js-factory/onejs
 ```
@@ -26,7 +26,7 @@ Onejs offers following apis.
 
 #### withState 
 **withState** allow you to declare and bind it's properties and methods to a `Component`. 
-Please go through the [hoc](https://github.com/js-factory/hoc) documentation once to know more about it's features e.g hooks, state etc.
+Please go through the [hoc](https://www.npmjs.com/package/@js-factory/hoc/v/0.1.1) documentation once to know more about it's features e.g hooks, state etc.
 
 A typical component looks like this.
 
