@@ -1,20 +1,16 @@
-import { withState } from '@js-factory/onejs';
+import { Component } from '@js-factory/onejs';
 import componentDidMount from './hooks/componentDidMount';
 import onClickHandler from './handlers/onClickHandler';
 import FooTmpl from './FooTmpl';
 
-@withState({
-    hooks: {
-        componentDidMount
-    },
+@Component({
+    componentDidMount,
+    onClickHandler,
     state: {
         x: 0
     },
     instanceProps: {
         y: 0
-    },
-    eventHandlers: {
-        onClickHandler
     },
     template: FooTmpl
 })

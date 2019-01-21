@@ -1,4 +1,4 @@
-import { withState, withStore } from '@js-factory/onejs';
+import { Component, withStore } from '@js-factory/onejs';
 import componentDidMount from './hooks/componentDidMount';
 import increment from './actions/increment';
 import fetchToDoList from './actions/fetchToDoList';
@@ -12,18 +12,14 @@ import TodoTmpl from './ToDoTmpl';
         fetchToDoList
     }
 })
-@withState({
-    hooks: {
-        componentDidMount
-    },
+@Component({
+    componentDidMount,
+    onClickHandler,
     state: {
         x: 0,
     },
     instanceProps: {
         y: 0
-    },
-    eventHandlers: {
-        onClickHandler
     },
     template: TodoTmpl
 })
