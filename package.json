@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@js-factory/hoc": "^0.1.0",
+    "@js-factory/hoc": "^0.2.2",
     "@js-factory/store": "^0.1.0"
   },
   "devDependencies": {

@@ -1,11 +1,11 @@
-import withPreact, { injectStore } from '@js-factory/hoc/integration/preact/component';
+import Component, { injectStore } from '@js-factory/hoc/packages/preact/component_v2';
 import { withStore, createStore, actionCreator } from '@js-factory/store/src';
 
-const withState = withPreact;
+const withState = Component;
 export {
     withState,
     withStore,
-    withPreact,
+    Component,
     injectStore,
     createStore,
     actionCreator
@@ -14,7 +14,7 @@ export {
 export default {
     withState,
     withStore,
-    withPreact,
+    Component,
     injectStore,
     createStore,
     actionCreator

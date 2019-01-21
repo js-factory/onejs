@@ -1,5 +1,5 @@
 # onejs
-An unified Javascript framework for building high performance web application.
+An unified Javascript framework for building a high performance web application.
 
 ## Motivation
 Onejs provides an abstract layer over a javascript library. It enables developer/organization to write a vanilla javascript code and bind it with framework you choose to build your application with.
@@ -10,64 +10,83 @@ Considering all top javascript library adds considerable amount of initial javas
 ##### Classical component go polluted over the time and becomes hard to maintain
 This has been a common problem that after certain time your class component gets complex and a lot of business login being written into a single javascript file. With function programming approach we are trying to solve some of these problems. Developer needs to create small functions and attach those to your component. This allows you to maximize the usage of vanilla javascript.
 
-### Installation
+## Installation
 ```
 npm i -S @js-factory/onejs
 ```
 
-### APIs
+## APIs
 Onejs offers following apis.
 
-- withState
+- Component
 - withStore
 - createStore
 - actionCreator
 - injectStore
 
-#### withState 
-**withState** allow you to declare and bind it's properties and methods to a `Component`. 
-Please go through the [hoc](https://www.npmjs.com/package/@js-factory/hoc/v/0.1.1) documentation once to know more about it's features e.g hooks, state etc.
+### Component 
+**Component** is a higher level component. It creates react or preact component and binds all given properties and methods to it.
 
-A typical component looks like this.
+Please read [hoc](https://www.npmjs.com/package/@js-factory/hoc/v/0.2.2) documentation for further details.
+
+A typical component declaration looks like this.
 
 ```javascript
 // FooComponent.js
 
-import { withState } from '@js-factory/onejs';
+import { Component } from '@js-factory/onejs';
 import componentDidMount from './hooks/componentDidMount';
 import onClickHandler from './handlers/onClickHandler';
+import someOtherHandler from './util/someOtherHandler';
 import FooTmpl from './FooTmpl';
 
-@withState({
-    hooks: {
-        componentDidMount
-    },
+@Component({
+    componentDidMount,
+    someOtherHandler,
+    onClickHandler,
     state: {
         x: 0
     },
     instanceProps: {
         y: 0
     },
-    eventHandlers: {
-        onClickHandler
-    },
     template: FooTmpl
 })
 export default class FooComponent { }
 
 ```
-**Help: Please refer example section for addition information**
 
-#### withStore 
-**withStore** connects your component with application store.
-withStore provides two options.
-- **watcher** connects your component with given store properties. Any changes to this properties will trigger a re-render.
-- **actions** a collection of functions modifies store properties define in the watcher.
+### withStore 
+Every frontend application needs a data store. `withStore` provide a simple data store and wire a newly created `Component` with application store. Your typical store will be a plain javascript object.
+
+```js
+
+const appDataStore = {
+    key1: {
+        // some data
+    },
+    key2: {
+        // some data
+    },
+    key3: {
+        // some data
+    }
+};
+
+```
+
+`withStore` configuration is very simple and has two options.
+
+#### watcher
+**watcher** is nothing but keys in application store. When you define watcher with `withStore`, onejs connects your component with application store and any changes to these properties will trigger a re-render.
+
+#### action
+Action allows you to update store.
 
 ```javascript
 
 // ToDoContainer.js
-import { withState, withStore } from '@js-factory/onejs';
+import { Component, withStore } from '@js-factory/onejs';
 import componentDidMount from './hooks/componentDidMount';
 import increment from './actions/increment';
 import fetchToDoList from './actions/fetchToDoList';
@@ -81,18 +100,14 @@ import TodoTmpl from './ToDoTmpl';
         fetchToDoList
     }
 })
-@withState({
-    hooks: {
-        componentDidMount
-    },
+@Component({
+    componentDidMount,
+    onClickHandler,
     state: {
         x: 0,
     },
     instanceProps: {
         y: 0
-    },
-    eventHandlers: {
-        onClickHandler
     },
     template: TodoTmpl
 })
@@ -120,9 +135,9 @@ export default actionCreator('FETCH_TODO_LIST', {
 });
 
 ```
-**Help: Please refer example section for addition information**
+
 ### createStore
-**createStore** intializes application store. It takes 2 arguments to build the store. 1) initial state of an applicatio, and 2) middlewares to execute before updating the store property
+**createStore** initializes application store. It takes 2 arguments to build the store. 1) initial state of an application, and 2) middlewares to execute before updating the store properties.
 
 ```javascript
 // bootstrap.js
@@ -150,4 +165,4 @@ export default actionCreator('FETCH_TODO_LIST', {
 ```
 
 ### injectStore
-**injectStore** binds store with `withState`. It's an important step before your application gets connected with store.
+**injectStore** binds store with `Component`. It's an important step before your application is setup.
