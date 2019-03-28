@@ -1,3 +1,7 @@
+export const heading = {
+    textAlign: 'center'
+};
+
 export const baseStyle = {
     margin: '0 auto',
     width: '400px',
