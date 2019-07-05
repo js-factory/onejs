@@ -1,6 +1,6 @@
 {
   "name": "@js-factory/onejs",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A JavaScript framework for simple web application",
   "main": "index.js",
   "keywords": [
@@ -22,6 +22,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-preact": "^1.1.0"
+    "babel-preset-preact": "^1.1.0",
+    "braces": "^3.0.2"
   }
 }
