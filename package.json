@@ -14,6 +14,10 @@
     "@js-factory/hoc": "^0.2.4",
     "@js-factory/store": "^0.1.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/js-factory/onejs.git"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -22,7 +26,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-preact": "^1.1.0",
-    "braces": "^3.0.2"
+    "babel-preset-preact": "^1.1.0"
   }
 }
