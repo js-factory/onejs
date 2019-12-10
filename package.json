@@ -1,6 +1,6 @@
 {
   "name": "@js-factory/onejs",
-  "version": "0.4.0",
+  "version": "0.4.0-beta.1",
   "description": "A JavaScript framework for simple web application",
   "main": "index.js",
   "keywords": [
@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@js-factory/hoc": "^0.2.4",
+    "@js-factory/hoc": "0.3.0-beta.1",
     "@js-factory/store": "^0.1.0"
   },
   "repository": {
