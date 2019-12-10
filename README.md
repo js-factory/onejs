@@ -15,6 +15,12 @@ This has been a common problem that after certain amount of time your class comp
 npm i -S @js-factory/onejs
 ```
 
+## Dependency 
+You need to install preact in the host application.
+```
+npm i -S preact
+```
+
 ## APIs
 Onejs offers the following APIs.
 
