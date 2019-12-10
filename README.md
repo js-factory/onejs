@@ -1,33 +1,38 @@
 # onejs
-An unified Javascript framework for building a high performance web application.
+A Javascript [framework](https://en.wikipedia.org/wiki/Software_framework) for building a high-performance web application. 
 
 ## Motivation
-Onejs provides an abstract layer over a javascript library. It enables developer/organization to write a vanilla javascript code and bind it with framework you choose to build your application with.
+Onejs provides an abstract layer over a javascript library. It enables developer/organization to write a vanilla javascript code and bind it with the framework you choose to build your application with.
 
 ##### It's hard to switch between frameworks if your performance budget does not meet with one
-Considering all top javascript library adds considerable amount of initial javascript chunk into your application bundle i.e. react size is ~30kb. For any larger application, switch from one framework to another is relatively complex task and requires a lot of effort and time. onejs try to solve this problem and reduce the time and effort require in switching frameworks.
+Considering all top javascript library adds a considerable amount of initial javascript chunk into your application bundle i.e. react size is ~30kb. For any larger application, switching from one framework to another is a relatively complex task and requires a lot of effort and time. onejs try to solve this problem and reduce the time and effort require in switching frameworks.
 
-##### Classical component go polluted over the time and becomes hard to maintain
-This has been a common problem that after certain time your class component gets complex and a lot of business login being written into a single javascript file. With function programming approach we are trying to solve some of these problems. Developer needs to create small functions and attach those to your component. This allows you to maximize the usage of vanilla javascript.
+##### Classical component go polluted over time and becomes hard to maintain
+This has been a common problem that after certain amount of time your class component gets complex and a lot of business logic being written into a single javascript file. With the functional programming approach, we are trying to solve some of these problems. A developer needs to create small functions and attach those to your component. This allows you to maximize the usage of vanilla javascript.
 
 ## Installation
 ```
 npm i -S @js-factory/onejs
 ```
 
+## Dependency 
+You need to install preact in the host application.
+```
+npm i -S preact
+```
+
 ## APIs
-Onejs offers following apis.
+Onejs offers the following APIs.
 
 - Component
 - withStore
 - createStore
 - actionCreator
-- injectStore
 
-### Component 
-**Component** is a higher level component. It creates react or preact component and binds all given properties and methods to it.
+### Component
+**Component** is a higher-level component. It creates a react or preact component and binds all given properties and methods to it.
 
-Please read [hoc](https://www.npmjs.com/package/@js-factory/hoc/v/0.2.2) documentation for further details.
+Please read [hoc](https://www.npmjs.com/package/@js-factory/hoc) documentation for further details.
 
 A typical component declaration looks like this.
 
@@ -41,47 +46,44 @@ import someOtherHandler from './util/someOtherHandler';
 import FooTmpl from './FooTmpl';
 
 @Component({
-    componentDidMount,
-    someOtherHandler,
-    onClickHandler,
-    state: {
-        x: 0
-    },
-    instanceProps: {
-        y: 0
-    },
-    template: FooTmpl
+   componentDidMount,
+   someOtherHandler,
+   onClickHandler,
+   state: {
+       x: 0
+   },
+   instanceProps: {
+       y: 0
+   },
+   template: FooTmpl
 })
 export default class FooComponent { }
 
 ```
 
-### withStore 
-Every frontend application needs a data store. `withStore` provide a simple data store and wire a newly created `Component` with application store. Your typical store will be a plain javascript object.
+### withStore
+Every frontend application (read SPA) needs a persistent data store. The application should be able to maintain its state during back & forth page transitions. `withStore` connects the component with application's data store. 
 
-```js
-
-const appDataStore = {
-    key1: {
-        // some data
-    },
-    key2: {
-        // some data
-    },
-    key3: {
-        // some data
-    }
-};
-
-```
-
-`withStore` configuration is very simple and has two options.
+Configuring `withStore` is very simple. It has two options. 1) **watcher** , 2) action
 
 #### watcher
-**watcher** is nothing but keys in application store. When you define watcher with `withStore`, onejs connects your component with application store and any changes to these properties will trigger a re-render.
+Data store of an application is a big JavaScript objects. It holds the application state. **watcher** represents the keys in applications store (read a big javascript object). When you define watcher in `withStore`, onejs connects your component with the application store and any changes to these properties will update (re-render) the component.
+
+// App data store
+
+```js
+const appDataStore = {
+   todos: [
+       // todo
+   ],
+   counter: 0 // initial value
+};
+```
 
 #### action
-Action allows you to update store.
+The only way to connect to the store is an `action`. Actions allow you to modify the application state.
+
+**Complete Example**
 
 ```javascript
 
@@ -94,22 +96,22 @@ import onClickHandler from './handlers/onClickHandler';
 import TodoTmpl from './ToDoTmpl';
 
 @withStore({
-    watcher: ['home', 'counter', 'todos'],
-    actions: {
-        increment,
-        fetchToDoList
-    }
+   watcher: ['counter', 'todos'],
+   actions: {
+       increment,
+       fetchToDoList
+   }
 })
 @Component({
-    componentDidMount,
-    onClickHandler,
-    state: {
-        x: 0,
-    },
-    instanceProps: {
-        y: 0
-    },
-    template: TodoTmpl
+   componentDidMount,
+   onClickHandler,
+   state: {
+       x: 0,
+   },
+   instanceProps: {
+       y: 0
+   },
+   template: TodoTmpl
 })
 export default class ToDoContainer { }
 
@@ -117,12 +119,12 @@ export default class ToDoContainer { }
 import { actionCreator } from '@js-factory/onejs';
 
 export default actionCreator('INCREMENT', {
-    key: 'counter',
-    format({ count }) {     // `reducer` middleware setting
-        return {
-            count: count + 1
-        };
-    }
+   key: 'counter',
+   format({ count }) {     // `reducer` middleware setting
+       return {
+           count: count + 1
+       };
+   }
 });
 
 // fetchTodoList.js
@@ -130,23 +132,22 @@ export default actionCreator('INCREMENT', {
 import { actionCreator } from '@js-factory/onejs';
 
 export default actionCreator('FETCH_TODO_LIST', {
-    key: 'todos',   // store property
-    url: 'https://jsonplaceholder.typicode.com/todos'
+   key: 'todos',   // store property
+   url: 'https://jsonplaceholder.typicode.com/todos'
 });
 
 ```
 
 ### createStore
-**createStore** initializes application store. It takes 2 arguments to build the store. 1) initial state of an application, and 2) middlewares to execute before updating the store properties.
+**createStore** initializes application store. It takes 2 arguments to build the store. 1) initial state of an application, and 2) middleware(s) to execute before updating the store properties.
 
 ```javascript
 // bootstrap.js
 
-import { createStore, injectStore } from '@js-factory/onejs';
+import { createStore } from '@js-factory/onejs';
 import middleware from './middleware'
 
 const store = createStore({} , /* optional */ middleware);
-injectStore(store);
 
 export default store;
 
@@ -159,10 +160,7 @@ export default store;
 import { actionCreator } from '@js-factory/onejs';
 
 export default actionCreator('FETCH_TODO_LIST', {
-    key: 'todos',   // store property
-    url: 'https://jsonplaceholder.typicode.com/todos'
+   key: 'todos',   // store property
+   url: 'https://jsonplaceholder.typicode.com/todos'
 });
 ```
-
-### injectStore
-**injectStore** binds store with `Component`. It's an important step before your application is setup.
