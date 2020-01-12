@@ -1,4 +1,4 @@
-import Component, { injectStore } from './hoc/packages/preact/component';
+import Component, { injectStore } from './hoc/integration/preact/component';
 import { withStore, createStore as cs, actionCreator } from './store/src';
 
 const withState = Component;

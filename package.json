@@ -1,6 +1,6 @@
 {
   "name": "@js-factory/onejs",
-  "version": "0.5.0-beta.0",
+  "version": "0.5.0-beta.1",
   "description": "A JavaScript framework for simple web application",
   "main": "dist/one.js",
   "keywords": [
@@ -12,9 +12,7 @@
   "scripts": {
     "test": "jest",
     "build": "babel src --out-dir dist",
-    "package": "babel src --out-file dist/one.js",
-    "prepublish": "npm run build && npm run package",
-    "prepublishOnly": "npm run prepublish"
+    "prepublishOnly": "npm run build"
   },
   "license": "MIT",
   "dependencies": {
