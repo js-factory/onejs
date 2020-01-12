@@ -11,8 +11,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@js-factory/hoc": "^0.3.0",
-    "@js-factory/store": "^0.1.0"
+    "@js-factory/hoc": "^0.3.2",
+    "@js-factory/store": "^0.1.3"
   },
   "repository": {
     "type": "git",
