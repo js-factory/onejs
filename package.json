@@ -1,8 +1,8 @@
 {
   "name": "@js-factory/onejs",
-  "version": "0.5.0-beta.1",
+  "version": "0.5.0-beta.2",
   "description": "A JavaScript framework for simple web application",
-  "main": "dist/one.js",
+  "main": "dist/index.js",
   "keywords": [
     "javascript",
     "react",
