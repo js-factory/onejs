@@ -1,5 +1,5 @@
-import Component, { injectStore } from '@js-factory/hoc/packages/preact/component_v2';
-import { withStore, createStore as cs, actionCreator } from '@js-factory/store/src';
+import Component, { injectStore } from './hoc/packages/preact/component';
+import { withStore, createStore as cs, actionCreator } from './store/src';
 
 const withState = Component;
 

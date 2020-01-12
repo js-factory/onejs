@@ -1,0 +1,27 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        "preact"
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
+        "@babel/plugin-proposal-class-properties",
+        [
+            "@babel/plugin-proposal-object-rest-spread",
+            {
+                "useBuiltIns": true
+            }
+        ],
+        [
+            "@babel/plugin-transform-react-jsx",
+            {
+                "pragma": "h"
+            }
+        ]
+    ]
+}

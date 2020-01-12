@@ -1,0 +1,128 @@
+{
+    "root": true,
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true,
+        "jest": true,
+        "jest/globals": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalDecorators": true,
+            "allowImportExportEverywhere": true
+        }
+    },
+    "extends": [
+        "standard",
+        "standard-preact"
+    ],
+    "plugins": [
+        "jest"
+    ],
+    "settings": {
+        "react": {
+            "createClass": "createClass",
+            "pragma": "h",
+            "version": "16.0"
+        }
+    },
+    "rules": {
+        "no-dynamic-require": 0,
+        "arrow-parens": [
+            2,
+            "as-needed",
+            {
+                "requireForBlockBody": true
+            }
+        ],
+        "indent": [
+            2,
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "comma-dangle": [
+            2,
+            "never"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "react/jsx-indent": [
+            2,
+            4
+        ],
+        "react/jsx-indent-props": [
+            2,
+            4
+        ],
+        "react/jsx-no-duplicate-props": 2,
+        "react/jsx-filename-extension": [
+            2,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
+        "react/no-unknown-property": [
+            2,
+            {
+                "ignore": [
+                    "class"
+                ]
+            }
+        ],
+        "react/boolean-prop-naming": [
+            "error",
+            {
+                "rule": "^is[A-Z]([A-Za-z0-9]?)+"
+            }
+        ],
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": true,
+                "optionalDependencies": false,
+                "peerDependencies": false,
+                "packageDir": "./"
+            }
+        ],
+        "max-statements": 2,
+        "max-params": 2,
+        "max-depth": 2,
+        "complexity": [
+            2,
+            5
+        ],
+        "one-var": [
+            2,
+            "never"
+        ],
+        "no-useless-rename": 2,
+        "arrow-body-style": [
+            2,
+            "as-needed"
+        ],
+        "jsx-quotes": [
+            2,
+            "prefer-double"
+        ],
+        "space-before-function-paren": [
+            0,
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ]
+    }
+}
