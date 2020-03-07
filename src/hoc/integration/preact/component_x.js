@@ -91,6 +91,7 @@ export default function component(options = {}) {
         this.mergeProps = () => ({
           ..._self,
           ...props,
+          ...this.props,
           setState,
           getState,
           ...globalState
