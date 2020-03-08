@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 
 /dist
+/addon
+/package
 package-lock.json
 *.map
 .npmrc

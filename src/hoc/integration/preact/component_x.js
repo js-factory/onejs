@@ -127,7 +127,7 @@ export default function component(options = {}) {
         return (
           func &&
           function hook() {
-            func.apply(null, [this.mergeProps(), ...arguments]);
+            return func.apply(null, [this.mergeProps(), ...arguments]);
           }.bind(context)
         );
       }
