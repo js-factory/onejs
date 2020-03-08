@@ -164,3 +164,30 @@ export default actionCreator('FETCH_TODO_LIST', {
    url: 'https://jsonplaceholder.typicode.com/todos'
 });
 ```
+
+**Advance features (Add-ons)
+Onejs offers some cool feaures out-of-the-box. 
+
+***Lazy
+_Lazy_ enables you to implment component level code splitting. Using _Lazy_ would defer the the loading of the component to later.
+
+```javascript
+import { h } from 'preact';
+import Lazy from '@js-factory/onejs/package/addon/Lazy';
+
+const (props) => {
+    const {increment} = props;
+    ...
+    ...
+    ...
+
+    return (
+        <div>
+            <SomeOtherComponent1 />
+            <SomeOtherComponent2 />
+            <Lazy getComponent={() => import('./path/to/module')} />
+            <SomeOtherComponent3 />
+        <div>
+    )
+}
+```

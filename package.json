@@ -1,8 +1,8 @@
 {
   "name": "@js-factory/onejs",
-  "version": "0.5.0-beta.5",
+  "version": "0.5.0-beta.6.3",
   "description": "A JavaScript framework for simple web application",
-  "main": "dist/index.js",
+  "main": "package/index.js",
   "keywords": [
     "javascript",
     "react",
@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir package",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",

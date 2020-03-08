@@ -12,7 +12,7 @@ const DeferredTmpl = props => {
   if (!InnerComponent) {
     return null;
   }
-  return <InnerComponent {...props} />;
+  return h(InnerComponent, { ...props });
 };
 
 export default DeferredTmpl;

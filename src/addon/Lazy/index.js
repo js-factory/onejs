@@ -1,4 +1,4 @@
-import { withState } from '../index';
+import { withState } from '../../index';
 import DeferredTmpl from './DeferredTmpl';
 
 const state = () => ({ InnerComponent: null });
@@ -9,7 +9,7 @@ const state = () => ({ InnerComponent: null });
  * @param {function} fetchComponent - DeferredComponent import statement
  * @returns {JSX} PReact DeferredComponent Componentimport DeferredTmpl from './DeferredTmpl';
  */
-@withState({
+export default withState({
   state,
   componentDidMount({ setState, getComponent }) {
     getComponent().then(comp => {
@@ -20,5 +20,4 @@ const state = () => ({ InnerComponent: null });
     });
   },
   template: DeferredTmpl
-})
-export default class Lazy {}
+})();
