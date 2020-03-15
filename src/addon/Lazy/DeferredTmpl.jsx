@@ -7,12 +7,12 @@ import { h } from 'preact';
  * @returns {JSX} PReact DeferredComponent Component
  */
 const DeferredTmpl = props => {
-  const { state } = props;
+  const { state, ...rest } = props;
   const { InnerComponent } = state;
   if (!InnerComponent) {
     return null;
   }
-  return h(InnerComponent, { ...props });
+  return h(InnerComponent, { ...rest });
 };
 
 export default DeferredTmpl;
