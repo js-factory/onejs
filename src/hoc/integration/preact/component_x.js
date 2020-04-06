@@ -5,6 +5,9 @@
 import { h, Component } from 'preact';
 import getProps from '../util/getProps';
 
+const ACTION_KEY = 'action';
+const HANDLER_KEY = 'handler';
+
 const isObject = target =>
   Object.prototype.toString.call(target) === '[object Object]';
 let store = {};
@@ -21,12 +24,13 @@ function attachInstanceProps(instanceProps) {
   };
 }
 
-function bindHandler(handlers, modifier) {
+function bindHandler(handlers, modifier, TARGET_PROP_NAME) {
+  this[TARGET_PROP_NAME] = {};
   handlers &&
     Object.keys(handlers).map(key => {
       const fn = handlers[key];
       if (typeof fn === 'function') {
-        this[key] = modifier(fn, this);
+        this[TARGET_PROP_NAME][key] = modifier(fn, this);
       }
     });
 }
@@ -37,7 +41,9 @@ export default function component(options = {}) {
     template,
     instanceProps,
     componentDidMount,
+    componentDidUpdate,
     componentWillUnmount,
+    shouldComponentUpdate,
     componentWillReceiveProps,
     ...rest
   } = options;
@@ -60,18 +66,23 @@ export default function component(options = {}) {
         const pluck = getProps(watcher);
         const instancePropsClone = { ...instanceProps };
         // Attach handlers
-        bindHandler.call(this, actions, store.action);
-        bindHandler.call(this, rest, this.proxy);
+        bindHandler.call(this, actions, store.action, ACTION_KEY);
+        bindHandler.call(this, rest, this.proxy, HANDLER_KEY);
         attachInstanceProps.call(this, instancePropsClone);
 
         let globalState = this.__store__
           ? pluck(store ? store.getState() : {})
           : {};
 
+        // keep the previous state
+        let lastGlobalState = '{}';
+        let currentGlobalState = '{}';
+
         const updateStore = () => {
           if (!this.__store__) {
             return;
           }
+          lastGlobalState = currentGlobalState;
           let localState = pluck(store ? store.getState() : {});
           // if store value does change, do not call update
           for (let i in localState)
@@ -88,20 +99,45 @@ export default function component(options = {}) {
             }
         };
 
-        this.mergeProps = () => ({
-          ..._self,
-          ...props,
-          ...this.props,
-          setState,
-          getState,
-          ...globalState
-        });
+        this.mergeProps = () => {
+          const {
+            state,
+            instanceProps,
+            setInstanceProps,
+            getInstanceProps
+          } = _self;
+          const parentProps = { ...props, ...this.props };
+          if (shouldComponentUpdate) {
+            currentGlobalState = JSON.stringify({
+              ...parentProps,
+              ...globalState,
+              instanceProps,
+              state
+            });
+          }
+          return {
+            ...parentProps,
+            ...globalState,
+            ..._self[ACTION_KEY],
+            ..._self[HANDLER_KEY],
+            state,
+            setState,
+            getState,
+            instanceProps,
+            getInstanceProps,
+            setInstanceProps
+          };
+        };
 
         this.componentDidMount = () => {
           if (this.__store__) {
             store.subscribe(updateStore);
           }
           componentDidMount && componentDidMount.call(null, this.mergeProps());
+        };
+        this.componentDidUpdate = () => {
+          if (componentDidUpdate)
+            return componentDidUpdate.call(null, this.mergeProps());
         };
 
         this.componentWillUnmount = () => {
@@ -115,6 +151,18 @@ export default function component(options = {}) {
         this.componentWillReceiveProps = nxtProps => {
           componentWillReceiveProps &&
             componentWillReceiveProps.call(null, nxtProps, this.mergeProps());
+        };
+
+        this.shouldComponentUpdate = () => {
+          if (shouldComponentUpdate) {
+            const nextProps = this.mergeProps();
+            const prevProps = JSON.parse(lastGlobalState);
+            return shouldComponentUpdate.call(null, {
+              nextProps,
+              prevProps
+            });
+          }
+          return true;
         };
 
         this.render = props => {
