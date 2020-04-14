@@ -4,7 +4,7 @@ export default function createStore(
 ) {
   let subscribers = [];
   state = Object.assign({}, state);
-  middleware = middleware.map(fn => fn(getState));
+  middleware = middleware.map(fn => fn(getState, setState));
   function subscribe(subscriber) {
     subscribers.push(subscriber);
     return () => {
