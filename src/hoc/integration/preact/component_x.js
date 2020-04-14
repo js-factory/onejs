@@ -8,14 +8,14 @@ import getProps from '../util/getProps';
 const ACTION_KEY = 'action';
 const HANDLER_KEY = 'handler';
 
-const isObject = target =>
+const isObject = (target) =>
   Object.prototype.toString.call(target) === '[object Object]';
 let store = {};
 
 function attachInstanceProps(instanceProps) {
   this.instanceProps = instanceProps || {};
   this.getInstanceProps = () => this.instanceProps;
-  this.setInstanceProps = newVal => {
+  this.setInstanceProps = (newVal) => {
     if (!isObject(newVal)) {
       return {};
     }
@@ -27,7 +27,7 @@ function attachInstanceProps(instanceProps) {
 function bindHandler(handlers, modifier, TARGET_PROP_NAME) {
   this[TARGET_PROP_NAME] = {};
   handlers &&
-    Object.keys(handlers).map(key => {
+    Object.keys(handlers).map((key) => {
       const fn = handlers[key];
       if (typeof fn === 'function') {
         this[TARGET_PROP_NAME][key] = modifier(fn, this);
@@ -52,7 +52,11 @@ export default function component(options = {}) {
     return class Wrapper extends Component {
       constructor(props, context = {}) {
         super(props, context);
-        const setState = newState => this.setState({ ...newState });
+        const setState = (newState, cb) => {
+          if (typeof cb === 'function') {
+            this.setState({ ...newState }, cb);
+          } else this.setState({ ...newState });
+        };
         const getState = () => this.state;
         const _self = this;
         this.state = typeof state === 'function' ? state(props) : {};
@@ -104,7 +108,7 @@ export default function component(options = {}) {
             state,
             instanceProps,
             setInstanceProps,
-            getInstanceProps
+            getInstanceProps,
           } = _self;
           const parentProps = { ...props, ...this.props };
           if (shouldComponentUpdate) {
@@ -112,7 +116,7 @@ export default function component(options = {}) {
               ...parentProps,
               ...globalState,
               instanceProps,
-              state
+              state,
             });
           }
           return {
@@ -125,7 +129,7 @@ export default function component(options = {}) {
             getState,
             instanceProps,
             getInstanceProps,
-            setInstanceProps
+            setInstanceProps,
           };
         };
 
@@ -148,7 +152,7 @@ export default function component(options = {}) {
             componentWillUnmount.call(null, this.mergeProps());
         };
 
-        this.componentWillReceiveProps = nxtProps => {
+        this.componentWillReceiveProps = (nxtProps) => {
           componentWillReceiveProps &&
             componentWillReceiveProps.call(null, nxtProps, this.mergeProps());
         };
@@ -159,13 +163,13 @@ export default function component(options = {}) {
             const prevProps = JSON.parse(lastGlobalState);
             return shouldComponentUpdate.call(null, {
               nextProps,
-              prevProps
+              prevProps,
             });
           }
           return true;
         };
 
-        this.render = props => {
+        this.render = (props) => {
           const view = template || InnerComponent;
           return h(view, this.mergeProps());
         };
