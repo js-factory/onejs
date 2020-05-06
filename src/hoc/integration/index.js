@@ -1,4 +1,4 @@
-import Component from './preact/component_x';
+import Component from './react/component_x';
 
 const withState = Component;
 
